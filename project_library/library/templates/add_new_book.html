@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница добавления новой книги</title>
+</head>
+<body>
+<form action=""method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button> Добавить новую книгу</button>
+</form>
+</body>
+</html>
