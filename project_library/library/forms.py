@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Book
+from .models import Book, Reader
 
 
 class NewBookForm(forms.ModelForm):
@@ -8,8 +8,8 @@ class NewBookForm(forms.ModelForm):
         model = Book
         fields = "__all__"
 
-class NewAccountForm(forms.Form):
-    first_name=forms.CharField(label='first_name',max_length=15)
-    last_name=forms.CharField(label='last_name',max_length=15)
-    email=forms.EmailField(label='email')
-    password=forms.PasswordInput(render_value=True)
+class NewAccountForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = Reader
+        fields = "__all__"

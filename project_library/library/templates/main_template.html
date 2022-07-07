@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data storage</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+<header id="header">
+    <div class="block">
+        <strong>Welcome to date storage</strong>
+        <img src="{% static 'images/logo1.jpg' %}" alt="" class="header_logo">
+        <img src="{% static 'images/python.jpg' %}" alt="" class="header_logo">
+        <img src="{% static 'images/lisendo.jpg' %}" alt="" class="header_logo">
+    </div>
+</header>
+<navigate id="navigate">
+    <a href="{% url 'main' %}">Main page</a>
+    <a href="{% url 'add_new_book' %}">Adding new book</a>
+    <a href="{% url 'find_new_book' %}">Book search request</a>
+    <a href="{% url 'new_acc' %}">add new reader</a>
+    <a href="{% url 'book_list' %}">book list</a>
+    <a href="{% url 'reader_list' %}">reader list</a>
+</navigate>
+
+{% block content %}
+{% endblock %}
+
+
+</body>
+</html>
