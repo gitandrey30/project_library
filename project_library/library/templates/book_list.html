@@ -4,4 +4,15 @@
 
 {% block content %}
 
+<ul>
+    {% for book in book_list %}
+    <li>{{ book }}, цена - {{ book.price }}USD</li>
+    {% endfor %}
+
+</ul>
+
+<div class="popup" onclick="myFunction()">Click
+    <span class="popuptext" id="myPopup">pop</span>
+</div>
+
 {% endblock %}

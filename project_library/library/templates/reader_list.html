@@ -3,6 +3,10 @@
 
 
 {% block content %}
-    {% for i in objects_list %}
+
+<ul>
+    {% for reader in readers %}
+    <li>{{ reader }}</li>
     {% endfor %}
+</ul>
 {% endblock %}

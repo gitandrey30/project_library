@@ -34,6 +34,8 @@ class Reader(models.Model):
     email = models.EmailField()
     address = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.surname
 
 
 
