@@ -13,3 +13,7 @@ class NewAccountForm(forms.ModelForm):
     class Meta:
         model = Reader
         fields = "__all__"
+
+# class AuthForm(forms.Form):
+#     login = forms.CharField(widget=forms.TextInput, label='введите login')
+#     password = forms.CharField(widget=forms.PasswordInput, label='введите пароль')

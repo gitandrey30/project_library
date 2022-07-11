@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
@@ -8,13 +8,15 @@ from .forms import NewBookForm, NewAccountForm
 from .models import Book, Reader
 
 
-def main_page(request):
-    return render(request)
+# def main_page(request):
+#     return render(request)
 
 
 def add_new_book(request):
     form = NewBookForm()
-    context = {'form': form}
+    context = {'form': form,
+               'title': 'добавление новой книги'
+               }
     if request.method == 'POST':
         form = NewBookForm(request.POST, request.FILES)
         if form.is_valid():
@@ -24,9 +26,13 @@ def add_new_book(request):
 
 def add_new_account(request):
     account_form = NewAccountForm()
-    context = {'form': account_form}
+    context = {'form': account_form,
+               'title': 'добавление нового аккаунта'
+               }
     if request.method == 'POST':
         account_form = NewAccountForm(request.POST)
+        if account_form.is_valid():
+            account_form.save()
     return render(request, 'new_account_page.html', context)
 
 
@@ -35,41 +41,29 @@ def get_home_page(request):
 
 
 def request_new_book(request):
-    return render(request, 'find_new_book.html')
+    return render(request, 'find_new_book.html', {'title': 'запрос новой книги'})
 
 
-def show_book_list(request):
-    book_list = Book.objects.all()
-    context = {'book_list': book_list}
-    print(book_list)
-    return render(request, 'book_list.html', context)
+class BookListView(ListView):
+    model = Book
+    template_name = 'book_list.html'
 
-# class BookListView(ListView):
-#     model = Book
-#     template_name = 'book_list.html'
-#     paginate_by = 1
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         print(context)
-#         context['title'] = 'title'
-#         return context
-
-def show_readers(request):
-    readers = Reader.objects.all()
-    context = {'readers': readers}
-    print(readers)
-    return render(request, 'reader_list.html', context)
+    # paginate_by = 1
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+        context['title'] = 'страница доступных книг'
+        return context
 
 
 class ReaderListView(ListView):
     model = Reader
     template_name = 'reader_list.html'
-    #extra_context = {'title': 'список читателей'}
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        print(context)
         context['title'] = 'список читателей'
-        context['cat_selected'] = 0
         return context
 
     # def get_queryset(self):
@@ -86,3 +80,18 @@ def contact(request):
 
 def get_error(request):
     return render(request, 'error.html')
+
+
+# def authentication(request):
+#     auth_form = AuthForm(data=request.POST)
+#     context = {'auth_form': auth_form,
+#                'title': 'аутентификация'
+#                }
+#     if request.method == 'POST':
+#         if auth_form.is_valid():
+#             # user = verify_form.get_user()
+#             # # login(request, user)
+#             return redirect
+#     else:
+#         auth_form = AuthForm()
+#     return render(request, 'login.html', context)
